@@ -1,0 +1,12 @@
+model UnitType {
+  id        String @id @default(uuid(7)) @db.Uuid
+  name      String @unique
+  tireCount Int    @default(0)
+
+  // Timestamp
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // Relations
+  accountUnitTypeAccesses AccountUnitTypeAccess[]
+}

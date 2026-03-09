@@ -1,0 +1,16 @@
+model Session {
+  id        String   @id @default(uuid(7)) @db.Uuid
+  deviceId  String   @unique @db.Uuid
+  platform  String?
+  browser   String?
+  lastSeen  DateTime
+  fcmToken  String?
+  accountId String   @db.Uuid
+
+  // Timestamp
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // Relations
+  account Account @relation(fields: [accountId], references: [id])
+}

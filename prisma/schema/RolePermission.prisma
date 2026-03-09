@@ -1,0 +1,20 @@
+model RolePermission {
+  roleId       String   @db.Uuid
+  permissionId String   @db.Uuid
+  create       Boolean  @default(false)
+  read         Boolean  @default(false)
+  update       Boolean  @default(false)
+  delete       Boolean  @default(false)
+  grantedAt    DateTime @default(now())
+
+  // Timestamp
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // Relations
+  role       Role       @relation(fields: [roleId], references: [id])
+  permission Permission @relation(fields: [permissionId], references: [id])
+
+  @@id([roleId, permissionId])
+  @@index([permissionId])
+}

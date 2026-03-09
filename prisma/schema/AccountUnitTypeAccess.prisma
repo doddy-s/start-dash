@@ -1,0 +1,10 @@
+model AccountUnitTypeAccess {
+  accountId  String @db.Uuid
+  unitTypeId String @db.Uuid
+
+  // Relations
+  account  Account  @relation(fields: [accountId], references: [id])
+  unitType UnitType @relation(fields: [unitTypeId], references: [id])
+
+  @@id([accountId, unitTypeId])
+}

@@ -1,0 +1,16 @@
+model Role {
+  id           String  @id @default(uuid(7)) @db.Uuid
+  slug         String  @unique
+  name         String  @unique
+  description  String?
+  isPredefined Boolean @default(false)
+
+  // Timestamp
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+
+  // Relations
+  accountRoles    AccountRole[]
+  rolePermissions RolePermission[]
+}

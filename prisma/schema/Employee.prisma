@@ -1,0 +1,17 @@
+model Employee {
+  id                 String  @id @default(uuid(7)) @db.Uuid
+  name               String  @unique
+  fullName           String?
+  phoneNumber        String?
+  signatureFileId    String? @db.Uuid
+  profilePhotoFileId String? @db.Uuid
+  accountId          String  @unique @db.Uuid
+
+  // Timestamp
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+
+  // Relations
+  account Account @relation(fields: [accountId], references: [id])
+}

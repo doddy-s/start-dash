@@ -1,0 +1,19 @@
+model Account {
+  id       String      @id @default(uuid(7)) @db.Uuid
+  email    String?     @unique
+  username String      @unique
+  password String?
+  type     AccountType @default(EMPLOYEE)
+  metadata Json        @default("{}")
+
+  // Timestamp
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+
+  // Relations
+  accountRoles            AccountRole[]
+  sessions                Session[]
+  accountUnitTypeAccesses AccountUnitTypeAccess[]
+  employee                Employee?
+}
