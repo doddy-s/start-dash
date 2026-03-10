@@ -51,7 +51,15 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Account: 'Account'
+  Account: 'Account',
+  AccountRole: 'AccountRole',
+  AccountUnitTypeAccess: 'AccountUnitTypeAccess',
+  Employee: 'Employee',
+  Permission: 'Permission',
+  Role: 'Role',
+  RolePermission: 'RolePermission',
+  Session: 'Session',
+  UnitType: 'UnitType'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -75,14 +83,114 @@ export const AccountScalarFieldEnum = {
   email: 'email',
   username: 'username',
   password: 'password',
-  disabled: 'disabled',
   type: 'type',
   metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+
+
+export const AccountRoleScalarFieldEnum = {
+  accountId: 'accountId',
+  roleId: 'roleId',
+  assignedAt: 'assignedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+export type AccountRoleScalarFieldEnum = (typeof AccountRoleScalarFieldEnum)[keyof typeof AccountRoleScalarFieldEnum]
+
+
+export const AccountUnitTypeAccessScalarFieldEnum = {
+  accountId: 'accountId',
+  unitTypeId: 'unitTypeId'
+} as const
+
+export type AccountUnitTypeAccessScalarFieldEnum = (typeof AccountUnitTypeAccessScalarFieldEnum)[keyof typeof AccountUnitTypeAccessScalarFieldEnum]
+
+
+export const EmployeeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  fullName: 'fullName',
+  phoneNumber: 'phoneNumber',
+  signatureFileId: 'signatureFileId',
+  profilePhotoFileId: 'profilePhotoFileId',
+  accountId: 'accountId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
+
+
+export const PermissionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
+
+
+export const RoleScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  name: 'name',
+  description: 'description',
+  isPredefined: 'isPredefined',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
+
+
+export const RolePermissionScalarFieldEnum = {
+  roleId: 'roleId',
+  permissionId: 'permissionId',
+  create: 'create',
+  read: 'read',
+  update: 'update',
+  delete: 'delete',
+  grantedAt: 'grantedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnum)[keyof typeof RolePermissionScalarFieldEnum]
+
+
+export const SessionScalarFieldEnum = {
+  id: 'id',
+  deviceId: 'deviceId',
+  platform: 'platform',
+  browser: 'browser',
+  lastSeen: 'lastSeen',
+  fcmToken: 'fcmToken',
+  accountId: 'accountId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const UnitTypeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  tireCount: 'tireCount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UnitTypeScalarFieldEnum = (typeof UnitTypeScalarFieldEnum)[keyof typeof UnitTypeScalarFieldEnum]
 
 
 export const SortOrder = {

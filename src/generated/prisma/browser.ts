@@ -22,3 +22,43 @@ export * from './enums.ts';
  * 
  */
 export type Account = Prisma.AccountModel
+/**
+ * Model AccountRole
+ * 
+ */
+export type AccountRole = Prisma.AccountRoleModel
+/**
+ * Model AccountUnitTypeAccess
+ * 
+ */
+export type AccountUnitTypeAccess = Prisma.AccountUnitTypeAccessModel
+/**
+ * Model Employee
+ * 
+ */
+export type Employee = Prisma.EmployeeModel
+/**
+ * Model Permission
+ * 
+ */
+export type Permission = Prisma.PermissionModel
+/**
+ * Model Role
+ * 
+ */
+export type Role = Prisma.RoleModel
+/**
+ * Model RolePermission
+ * 
+ */
+export type RolePermission = Prisma.RolePermissionModel
+/**
+ * Model Session
+ * 
+ */
+export type Session = Prisma.SessionModel
+/**
+ * Model UnitType
+ * 
+ */
+export type UnitType = Prisma.UnitTypeModel

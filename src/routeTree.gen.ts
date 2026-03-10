@@ -9,12 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AboutRouteImport } from './routes/about'
+import { Route as dashboardLayoutRouteImport } from './routes/(dashboard)/layout'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as dashboardEmployeeIndexRouteImport } from './routes/(dashboard)/employee/index'
+import { Route as dashboardAccountIndexRouteImport } from './routes/(dashboard)/account/index'
 
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const dashboardLayoutRoute = dashboardLayoutRouteImport.update({
+  id: '/(dashboard)',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -22,40 +23,59 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const dashboardEmployeeIndexRoute = dashboardEmployeeIndexRouteImport.update({
+  id: '/employee/',
+  path: '/employee/',
+  getParentRoute: () => dashboardLayoutRoute,
+} as any)
+const dashboardAccountIndexRoute = dashboardAccountIndexRouteImport.update({
+  id: '/account/',
+  path: '/account/',
+  getParentRoute: () => dashboardLayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/account/': typeof dashboardAccountIndexRoute
+  '/employee/': typeof dashboardEmployeeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/account': typeof dashboardAccountIndexRoute
+  '/employee': typeof dashboardEmployeeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/(dashboard)': typeof dashboardLayoutRouteWithChildren
+  '/(dashboard)/account/': typeof dashboardAccountIndexRoute
+  '/(dashboard)/employee/': typeof dashboardEmployeeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths: '/' | '/account/' | '/employee/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to: '/' | '/account' | '/employee'
+  id:
+    | '__root__'
+    | '/'
+    | '/(dashboard)'
+    | '/(dashboard)/account/'
+    | '/(dashboard)/employee/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
+  dashboardLayoutRoute: typeof dashboardLayoutRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/(dashboard)': {
+      id: '/(dashboard)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof dashboardLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -65,22 +85,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(dashboard)/employee/': {
+      id: '/(dashboard)/employee/'
+      path: '/employee'
+      fullPath: '/employee/'
+      preLoaderRoute: typeof dashboardEmployeeIndexRouteImport
+      parentRoute: typeof dashboardLayoutRoute
+    }
+    '/(dashboard)/account/': {
+      id: '/(dashboard)/account/'
+      path: '/account'
+      fullPath: '/account/'
+      preLoaderRoute: typeof dashboardAccountIndexRouteImport
+      parentRoute: typeof dashboardLayoutRoute
+    }
   }
 }
 
+interface dashboardLayoutRouteChildren {
+  dashboardAccountIndexRoute: typeof dashboardAccountIndexRoute
+  dashboardEmployeeIndexRoute: typeof dashboardEmployeeIndexRoute
+}
+
+const dashboardLayoutRouteChildren: dashboardLayoutRouteChildren = {
+  dashboardAccountIndexRoute: dashboardAccountIndexRoute,
+  dashboardEmployeeIndexRoute: dashboardEmployeeIndexRoute,
+}
+
+const dashboardLayoutRouteWithChildren = dashboardLayoutRoute._addFileChildren(
+  dashboardLayoutRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
+  dashboardLayoutRoute: dashboardLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { startInstance } from './start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }
